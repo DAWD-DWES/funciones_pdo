@@ -25,42 +25,128 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <tr><td colspan="2"><p>Inserta una nueva familia en la tabla familias</p></td></tr>
             <tr>
                 <td>$sql = "insert into familias (cod, nombre) values ('PERI', 'Periféricos');"</td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "insert into familias (cod, nombre) values ('PERI', 'Periféricos');";
+                    try {
+                        $resultado = $bd->exec($sql);
+                        var_dump($resultado);
+                    } catch (PDOException $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan="2"><p>Cambia el precio del producto con id igual a 6 a 387 euros</p></td></tr>
             <tr>
                 <td>$sql = "update productos set pvp = 387 where id = 6;"</td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "update productos set pvp = 387 where id = 6;";
+                    try {
+                        $resultado = $bd->exec($sql);
+                        var_dump($resultado);
+                    } catch (PDOException $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan="2"><p>Borra los productos de la tabla productos que tengan un precio menor de 100 euros</p></td></tr>
             <tr>
                 <td>$sql = "delete from productos where pvp < 100;"</td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "delete from productos where pvp < 100;";
+                    try {
+                        $resultado = $bd->exec($sql);
+                        var_dump($resultado);
+                    } catch (PDOException $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan = "2"><p>Muestra el número de tiendas almacenadas en la tabla tiendas </p></td></tr>
             <tr>
                 <td>$sql = "select count(*) from tiendas;";
                 </td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "select count(*) from tiendas;";
+                    try {
+                        $stmt = $bd->query($sql);
+                        $numTiendas = $stmt->fetchColumn();
+                        var_dump($numTiendas);
+                    } catch (PDOException $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?></td>
             </tr>
             <tr><td colspan = "2"><p>Inserta una tienda en la tabla de tiendas con una sentencia preparada. Vincula los datos en el método execute.
                         Muestra el id de la última tienda insertada</p></td></tr>
             <tr>
                 <td>$sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);"
                 </td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
+                    try {
+                        $stmt = $bd->prepare($sql);
+                        $resultado = $stmt->execute([':nombre' => "SUCURSAL3", ':tlf' => '600232323']);
+                        var_dump($resultado);
+                        var_dump($bd->lastInsertId());
+                        $resultado = $stmt->execute([':nombre' => "SUCURSAL4", ':tlf' => '607878787']);
+                        var_dump($resultado);
+                        var_dump($bd->lastInsertId());
+                    } catch (Exception $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan = "2"><p>Inserta una tienda en la tabla de tiendas con una sentencia preparada. Víncula los datos con bind_param</p></td></tr>
             <tr>
                 <td>$sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);"
                 </td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
+                    try {
+                        $stmt = $bd->prepare($sql);
+                        $nombre = "SUCURSAL13";
+                        $tlf = '613767676';
+                        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+                        $stmt->bindParam(':tlf', $nombre, PDO::PARAM_STR);
+                        $resultado = $stmt->execute();
+                        var_dump($resultado);
+                        $nombre = "SUCURSAL14";
+                        $tlf = '614565656';
+                        $resultado = $stmt->execute();
+                        var_dump($resultado);
+                    } catch (Exception $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan = "2"><p>Inserta una tienda en la tabla de tiendas con una sentencia preparada. Víncula los datos con bind_value</p></td></tr>
             <tr>
                 <td>$sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);"
                 </td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
+                    try {
+                        $stmt = $bd->prepare($sql);
+                        $nombre = "SUCURSAL23";
+                        $tlf = '623161616';
+                        $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+                        $stmt->bindValue(':tlf', $nombre, PDO::PARAM_STR);
+                        $resultado = $stmt->execute();
+                        var_dump($resultado);
+                        $nombre = "SUCURSAL24";
+                        $tlf = '624929292';
+                        $resultado = $stmt->execute();
+                        var_dump($resultado);
+                    } catch (Exception $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
             <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que correspondan a la familia TV. 
                         Utiliza el método fetch para acceder a cada uno de los productos. 
@@ -68,16 +154,77 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         Por último utiliza un iterador para recorrer el conjunto de resultados.</p></td></tr>
             <tr>
                 <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where familia = 'TV';</td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where familia = 'TV';";
+                    try {
+                        $stmt = $bd->prepare($sql);
+                        $stmt->execute();
+                        echo 'Valor PDO::FETCH_BOTH (Defecto)';
+                        while ($producto = $stmt->fetch()) {
+                            echo '<pre>';
+                            print_r($producto);
+                            echo '</pre>';
+                        }
+                        $stmt->execute();
+                        echo 'Valor PDO::FETCH_ASSOC';
+                        while ($producto = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<pre>';
+                            print_r($producto);
+                            echo '</pre>';
+                        }
+                        $stmt->execute();
+                        echo 'Valor PDO::FETCH_NUM';
+                        while ($producto = $stmt->fetch(PDO::FETCH_NUM)) {
+                            echo '<pre>';
+                            print_r($producto);
+                            echo '</pre>';
+                        }
+                        echo 'Valor PDO::FETCH_OBJ';
+                        $stmt->execute();
+                        while ($producto = $stmt->fetch(PDO::FETCH_OBJ)) {
+                            echo '<pre>';
+                            print_r($producto);
+                            echo '</pre>';
+                        }
+                        echo 'Uso de un iterador';
+                        $stmt->execute();
+                        $iterator = $stmt->getIterator();
+                        foreach ($iterator as $producto) {
+                            echo '<pre>';
+                            print_r($producto);
+                            echo '</pre>';
+                        }
+                    } catch (Exception $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?></td>
             </tr>
             <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que cuesten más de 300 euros. 
                         Utiliza el método fetchAll para obtener todos los productos a la vez.
-                        Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
+                    Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
             <tr>
                 <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > 300;
                 </td>
-                <td><!-- Escribe tu código aquí --></td>
+                <td><?php
+                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where pvp > 300;";
+                    try {
+                        $stmt = $bd->prepare($sql);
+                        $stmt->execute();
+                        $productos = $stmt->fetchAll();
+                        echo '<pre>';
+                        print_r($productos);
+                        echo '</pre>';
+                        var_dump($stmt->rowCount());
+                    } catch (Exception $ex) {
+                        echo $ex->getMessage();
+                    }
+                    ?>
+                </td>
             </tr>
         </table>
     </body>
 </html>
+<?php
+$stmt = null;
+$bd = null;
+?>
