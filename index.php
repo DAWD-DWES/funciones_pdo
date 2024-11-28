@@ -148,31 +148,31 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     ?>
                 </td>
             </tr>
-            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que correspondan a la familia TV. 
+            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que correspondan a una familia dada. 
                         Utiliza el método fetch para acceder a cada uno de los productos. 
                         Prueba a ejecutar los fetch con los flags: PDO::FETCH_NUM, PDO::FETCH_ASSOC y PDO::FETCH_OBJ. 
                         Por último utiliza un iterador para recorrer el conjunto de resultados.</p></td></tr>
             <tr>
-                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where familia = 'TV';</td>
+                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where familia = :familia;</td>
                 <td><?php
-                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where familia = 'TV';";
+                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where familia = :familia;";
                     try {
                         $stmt = $bd->prepare($sql);
-                        $stmt->execute();
+                        $stmt->execute([':familia' => 'TV']);
                         echo 'Valor PDO::FETCH_BOTH (Defecto)';
                         while ($producto = $stmt->fetch()) {
                             echo '<pre>';
                             print_r($producto);
                             echo '</pre>';
                         }
-                        $stmt->execute();
+                        $stmt->execute([':familia' => 'CONSOL']);
                         echo 'Valor PDO::FETCH_ASSOC';
                         while ($producto = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo '<pre>';
                             print_r($producto);
                             echo '</pre>';
                         }
-                        $stmt->execute();
+                        $stmt->execute([':familia' => 'VIDEOC']);
                         echo 'Valor PDO::FETCH_NUM';
                         while ($producto = $stmt->fetch(PDO::FETCH_NUM)) {
                             echo '<pre>';
@@ -180,14 +180,14 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             echo '</pre>';
                         }
                         echo 'Valor PDO::FETCH_OBJ';
-                        $stmt->execute();
+                        $stmt->execute([':familia' => 'MP3']);
                         while ($producto = $stmt->fetch(PDO::FETCH_OBJ)) {
                             echo '<pre>';
                             print_r($producto);
                             echo '</pre>';
                         }
                         echo 'Uso de un iterador';
-                        $stmt->execute();
+                        $stmt->execute([':familia' => 'PORTAT']);
                         $iterator = $stmt->getIterator();
                         foreach ($iterator as $producto) {
                             echo '<pre>';
@@ -203,13 +203,13 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         Utiliza el método fetchAll para obtener todos los productos a la vez.
                     Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
             <tr>
-                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > 300;
+                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > :pvp;
                 </td>
                 <td><?php
-                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where pvp > 300;";
+                    $sql = "select id, nombre, nombre_corto, pvp, familia from productos where pvp > :pvp;";
                     try {
                         $stmt = $bd->prepare($sql);
-                        $stmt->execute();
+                        $stmt->execute(['pvp' => 300]);
                         $productos = $stmt->fetchAll();
                         echo '<pre>';
                         print_r($productos);
