@@ -62,19 +62,19 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 </td>
                 <td><!-- Escribe tu código aquí --></td>
             </tr>
-            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que correspondan a la familia TV. 
+            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que correspondan a una familia dada. 
                         Utiliza el método fetch para acceder a cada uno de los productos. 
                         Prueba a ejecutar los fetch con los flags: PDO::FETCH_NUM, PDO::FETCH_ASSOC y PDO::FETCH_OBJ. 
                         Por último utiliza un iterador para recorrer el conjunto de resultados.</p></td></tr>
             <tr>
-                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where familia = 'TV';</td>
+                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where familia = :familia;</td>
                 <td><!-- Escribe tu código aquí --></td>
             </tr>
-            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que cuesten más de 300 euros. 
+            <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que cuesten más de un precio dado. 
                         Utiliza el método fetchAll para obtener todos los productos a la vez.
                         Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
             <tr>
-                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > 300;
+                <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > :pvp;
                 </td>
                 <td><!-- Escribe tu código aquí --></td>
             </tr>

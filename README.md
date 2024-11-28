@@ -1,4 +1,4 @@
-# funciones_preg
+# funciones_pdo
 Resuelve las funcionalidades que se plantean en los párrafos de la página web. 
 Utiliza la librería PDO de PHP para programar las soluciones. Busca en el código
 las ubicaciones donde incluir el código en el script PHP, dichas ubicaciones se marcan con el 
