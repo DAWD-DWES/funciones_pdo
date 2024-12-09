@@ -89,13 +89,13 @@ try {
                     $sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
                     try {
                         $stmt = $bd->prepare($sql);
-                        $nombre = "SUCURSAL13";
+                        $nombre = 'SUCURSAL13';
                         $tlf = '613767676';
                         $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
                         $stmt->bindParam(':tlf', $tlf, PDO::PARAM_STR);
                         $resultado = $stmt->execute();
                         var_dump($resultado);
-                        $nombre = "SUCURSAL14";
+                        $nombre = 'SUCURSAL14';
                         $tlf = '614565656';
                         $resultado = $stmt->execute();
                         var_dump($resultado);
@@ -113,20 +113,18 @@ try {
                     $sql = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
                     try {
                         $stmt = $bd->prepare($sql);
-                        $nombre = "SUCURSAL23";
+                        $nombre = 'SUCURSAL23';
                         $tlf = '623161616';
                         $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
                         $stmt->bindValue(':tlf', $tlf, PDO::PARAM_STR);
                         $resultado = $stmt->execute();
                         var_dump($resultado);
-                        $nombre = "SUCURSAL24";
+                        $nombre = 'SUCURSAL24';
                         $tlf = '624929292';
                         $resultado = $stmt->execute();
                         var_dump($resultado);
                     } catch (PDOException $ex) {
                         echo $ex->getMessage();
-                    } finally {
-                        $stmt = null;
                     }
                     ?>
                 </td>
@@ -141,31 +139,27 @@ try {
                     $sql1 = "insert into tiendas (nombre, tlf) values (:nombre, :tlf);";
                     try {
                         $stmt1 = $bd->prepare($sql);
-                        $resultado1 = $stmt1->execute([':nombre' => "SUCURSAL3", ':tlf' => '600232323']);
+                        $resultado1 = $stmt1->execute([':nombre' => 'SUCURSAL3', ':tlf' => '600232323']);
                         var_dump($resultado1);
                         var_dump($bd->lastInsertId());
-                        $resultado2 = $stmt1->execute([':nombre' => "SUCURSAL4", ':tlf' => '607878787']);
+                        $resultado2 = $stmt1->execute([':nombre' => 'SUCURSAL4', ':tlf' => '607878787']);
                         var_dump($resultado2);
                         var_dump($bd->lastInsertId());
                     } catch (PDOException $ex) {
                         echo $ex->getMessage();
-                    } finally {
-                        $stmt1 = null;
-                    }
+                    } 
                     $sql2 = "insert into tiendas (nombre, tlf) values (?, ?);";
                     try {
-                        $stmt2 = $bd->prepare($sql);
-                        $resultado3 = $stmt2->execute(["SUCURSAL5", '605676767']);
+                        $stmt2 = $bd->prepare($sql2);
+                        $resultado3 = $stmt2->execute(['SUCURSAL5', '605676767']);
                         var_dump($resultado3);
                         var_dump($bd->lastInsertId());
-                        $resultado4 = $stmt2->execute(["SUCURSAL6", '606616161']);
+                        $resultado4 = $stmt2->execute(['SUCURSAL6', '606616161']);
                         var_dump($resultado4);
                         var_dump($bd->lastInsertId());
                     } catch (PDOException $ex) {
                         echo $ex->getMessage();
-                    } finally {
-                        $stmt2 = null;
-                    }
+                    } 
                     ?>
                 </td>
             </tr>
@@ -217,8 +211,6 @@ try {
                         }
                     } catch (PDOException $ex) {
                         echo $ex->getMessage();
-                    } finally {
-                        $stmt = null;
                     }
                     ?></td>
             </tr>
@@ -240,9 +232,7 @@ try {
                         var_dump($stmt->rowCount());
                     } catch (PDOException $ex) {
                         echo $ex->getMessage();
-                    } finally {
-                        $stmt = null;
-                    }
+                    } 
                     ?>
                 </td>
             </tr>
@@ -251,4 +241,3 @@ try {
 </html>
 <?php
 $bd = null;
-?>
