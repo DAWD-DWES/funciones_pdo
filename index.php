@@ -6,10 +6,12 @@ $pass = "secreto";
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 try {
     $bd = new PDO($dsn, $user, $pass);
+    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $ex) {
-    echo $ex->getMessage();
+    error_log("Error de conexión: " . $ex->getMessage());
+    echo "La base de datos no está disponible, pero puede navegar por otras secciones.";
+    exit;
 }
-$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 <!DOCTYPE html>
 <html>
