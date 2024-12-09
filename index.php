@@ -6,10 +6,12 @@ $pass = "secreto";
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 try {
     $bd = new PDO($dsn, $user, $pass);
+    $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $ex) {
-    echo $ex->getMessage();
+    error_log("Error de conexión: " . $ex->getMessage()); // Registrar el error
+    echo "No se pudo establecer la conexión a la base de datos. Inténtelo más tarde."; // Mensaje genérico
+    exit;
 }
-$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 <!DOCTYPE html>
 <html>
@@ -201,7 +203,7 @@ $bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             </tr>
             <tr><td colspan = "2"><p>Muestra los datos de los productos de la tabla de productos que cuesten más de 300 euros. 
                         Utiliza el método fetchAll para obtener todos los productos a la vez.
-                    Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
+                        Muestra el número de productos que cumplen el criterio de búsqueda</p></td></tr>
             <tr>
                 <td>$sql = select id, nombre, nombre_corto, pvp, familia from productos where pvp > :pvp;
                 </td>
